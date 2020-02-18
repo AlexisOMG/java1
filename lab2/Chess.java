@@ -42,11 +42,8 @@ public class Chess {
                 break;
             }
         }
-        for (int i = row + 1, j = 0; i < this.size && iter > 0; ++i) {
-            if (color == 'b') {
-                while (this.notation[i].charAt(j++) != ' ');
-            }
-            for (; j < this.notation[i].length(); ++j) {
+        for (int i = row, j = 0; row != -1 && i < this.size && iter > 0; ++i) {
+            for (; j < this.notation[i].length() && iter > 0; ++j) {
                 if (figure == this.notation[i].charAt(j) &&
                     j + 5 < this.notation[i].length() &&
                     answ.charAt(0) == this.notation[i].charAt(j + 1) &&
@@ -54,6 +51,16 @@ public class Chess {
                 {
                     answ = this.notation[i].substring(j + 4, j + 6);
                     --iter;
+                    j += 5;
+                }
+                if (this.notation[i].charAt(j) == 'x' &&
+                        this.notation[i].charAt(j + 1) == answ.charAt(0) &&
+                        this.notation[i].charAt(j + 2) == answ.charAt(1))
+                {
+                    return "Your figure was eaten";
+                }
+                if (this.notation[i].charAt(j) == '#') {
+                    row = -1;
                     break;
                 }
             }
